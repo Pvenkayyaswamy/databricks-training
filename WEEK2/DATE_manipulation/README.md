@@ -1,4 +1,3 @@
-# 📅 Week 2 - Day 2
 
 # 📆 SQL Date & Timestamp Functions Assignment
 
