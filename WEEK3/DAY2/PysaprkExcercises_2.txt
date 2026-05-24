@@ -1,3 +1,5 @@
+#data creation
+
 data = [
     (1, "Sravan", 25, "Hyderabad", "Data Engineer", 55000, "2023-01-15", "IT"),
     (2, "Ravi", 28, "Bangalore", "Software Engineer", 72000, "2022-11-10", "IT"),
@@ -66,12 +68,16 @@ columns = [
     "department"
 ]
 
+#data frame creation
+
 df = spark.createDataFrame(data, columns)
+
+#show data
 
 df.show()
 
 
-
+#queries
 SELECT
 ========
 Select only emp_name and salary.
