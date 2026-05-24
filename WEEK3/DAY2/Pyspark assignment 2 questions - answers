@@ -366,4 +366,3 @@ df.sort("age").limit(5).display()
 
 # Display first 8 employees after filtering salary > 60000
 df.filter(col("salary") > 60000).limit(8).display()
-```
