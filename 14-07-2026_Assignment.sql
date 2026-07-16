@@ -88,27 +88,6 @@ select department, max(salary) as max_salary from employees group by department;
 select department, min(experience) as min_exp from employees group by department;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 --*HAVING*
 --Find departments having more than 3 employees.
 
