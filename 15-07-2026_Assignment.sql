@@ -98,8 +98,19 @@ INSERT INTO EmployeeProjects VALUES
 -- INNER JOIN
 -- ============
 -- Display employee names with department names.
+SELECT e.EmployeeName , d.DepartmentName from employees e INNER join  
+departments d on e.DepartmentID = d.DepartmentID;
+
 -- Display project names with department names.
+select p.ProjectName , d.DepartmentName from Projects p INNER join 
+departments d on  p.DepartmentID = d.DepartmentID;
+
 -- Show employees along with project names.
+select e.EmployeeID , e.EmployeeName , p.ProjectID , p.ProjectName from 
+Employees e INNER join EmployeeProjects e1 on e.EmployeeID = e1.EmployeeID
+INNER join Projects p on e1.ProjectID = p.ProjectID;
+
+
 -- Show employee salary and department location.
 -- Display all employees working on projects.
 
@@ -504,5 +515,3 @@ INSERT INTO StoreOrders VALUES
 -- Find departments appearing in both employee tables.
 -- Find customer names appearing in both customer tables.
 -- Find common salaries between current and former employees.
-
-
