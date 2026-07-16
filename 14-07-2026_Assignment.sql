@@ -1,4 +1,4 @@
-CREATE TABLE Employees (
+  CREATE TABLE Employees (
     emp_id INT,
     emp_name VARCHAR(50),
     department VARCHAR(50),
@@ -139,23 +139,43 @@ select top 3  emp_name , experience from Employees order by experience desc;
 select top 2 department , salary from Employees where department='Finance' order by salary desc;
 
 -- Display top 4 employees from Hyderabad.
-
+select top 4 emp_name , city from Employees where city='Hyderabad';
 
 -- Display top 1 highest salary employee.
+select top 1*  from Employees order by salary desc;
+
 
 -- *DISTINCT*
 -- Display distinct department names.
+select distinct department from Employees;
+
 -- Display distinct city names.
+select distinct city from Employees;
+
 -- Display distinct salary values.
+select distinct salary from Employees;
+
 -- Display distinct combinations of department and city.
+select distinct city,department  from Employees;
+
 -- Display distinct experience values.
+select distinct experience from Employees;
 
 -- *COMPARISON OPERATORS*
 -- Find employees with salary >= 80000.
+select * from Employees where salary>= 80000;
+
 -- Find employees with experience <= 3.
+select * from Employees where experience<=3;
+
 -- Find employees whose salary <> 45000.
+select * from Employees where salary <> 45000;
+
 -- Find employees with salary < 50000.
+select * from Employees where salary < 50000;
+
 -- Find employees with experience > 5.
+select emp_name , experience from Employees where experience>5;
 
 -- *LOGICAL OPERATORS*
 -- Find employees from IT department AND salary greater than 70000.
