@@ -98,104 +98,545 @@ INSERT INTO EmployeeProjects VALUES
 -- INNER JOIN
 -- ============
 -- Display employee names with department names.
-SELECT e.EmployeeName , d.DepartmentName from employees e INNER join  
-departments d on e.DepartmentID = d.DepartmentID;
+SELECT e.EmployeeName , d.DepartmentName from employees e 
+    INNER join  departments d 
+    on e.DepartmentID = d.DepartmentID;
 
 -- Display project names with department names.
-select p.ProjectName , d.DepartmentName from Projects p INNER join 
-departments d on  p.DepartmentID = d.DepartmentID;
+select p.ProjectName , d.DepartmentName from Projects p 
+    INNER join departments d 
+    on  p.DepartmentID = d.DepartmentID;
 
 -- Show employees along with project names.
-select e.EmployeeID , e.EmployeeName , p.ProjectID , p.ProjectName from 
-Employees e INNER join EmployeeProjects e1 on e.EmployeeID = e1.EmployeeID
-INNER join Projects p on e1.ProjectID = p.ProjectID;
+select e.EmployeeID , e.EmployeeName , p.ProjectID , p.ProjectName 
+    from Employees e 
+    INNER join EmployeeProjects e1 
+    on e.EmployeeID = e1.EmployeeID
+    INNER join Projects p 
+    on e1.ProjectID = p.ProjectID;
 
 
 -- Show employee salary and department location.
+SELECT e.EmployeeName,e.Salary,d.Location
+FROM Employees e
+INNER JOIN Departments d
+ON e.DepartmentID = d.DepartmentID;
+
+
 -- Display all employees working on projects.
+SELECT e.EmployeeID,
+    e.EmployeeName,
+       p.ProjectName
+FROM Employees e
+INNER JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+INNER JOIN Projects p
+ON ep.ProjectID = p.ProjectID;
+
 
 -- LEFT JOIN
 -- ===========
+
 -- Show all employees even if they don't belong to any department.
+SELECT e.EmployeeID,
+     e.EmployeeName,
+       d.DepartmentName
+FROM Employees e
+LEFT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID;
+
+
 -- Show all departments even if no employee works there.
+SELECT d.DepartmentID,
+     d.DepartmentName,
+       e.EmployeeName
+FROM Departments d
+LEFT JOIN Employees e
+ON d.DepartmentID = e.DepartmentID;
+
+
 -- Show all projects and their department names.
+SELECT p.ProjectName,
+     d.DepartmentName
+FROM Projects p
+LEFT JOIN Departments d
+ON p.DepartmentID = d.DepartmentID;
+
+
 -- Show every employee and their assigned projects.
+SELECT e.EmployeeName,
+     p.ProjectName
+FROM Employees e
+LEFT JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+LEFT JOIN Projects p
+ON ep.ProjectID = p.ProjectID;
+
+
 -- Display all employees even if they are not assigned to any project.
+SELECT e.EmployeeID,
+     e.EmployeeName,
+       p.ProjectName
+FROM Employees e
+LEFT JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+LEFT JOIN Projects p
+ON ep.ProjectID = p.ProjectID;
+
 
 -- RIGHT JOIN
 -- ============
+
 -- Show all departments even if there are no employees.
+SELECT d.DepartmentName,
+      e.EmployeeName
+FROM Employees e
+RIGHT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID;
+
+
 -- Show all projects even if no employee is assigned.
+SELECT p.ProjectName,
+      e.EmployeeName
+FROM EmployeeProjects ep
+RIGHT JOIN Projects p
+ON ep.ProjectID = p.ProjectID
+LEFT JOIN Employees e
+ON ep.EmployeeID = e.EmployeeID;
+
+
 -- Display every department and employees.
+SELECT d.DepartmentName,
+       e.EmployeeName
+FROM Employees e
+RIGHT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID;
+
+
 -- Show all projects with departments.
+SELECT p.ProjectName,
+       d.DepartmentName
+FROM Departments d
+RIGHT JOIN Projects p
+ON d.DepartmentID = p.DepartmentID;
+
+
 -- Show every project assignment including projects without employees.
+SELECT p.ProjectName,
+       e.EmployeeName
+FROM EmployeeProjects ep
+RIGHT JOIN Projects p
+ON ep.ProjectID = p.ProjectID
+LEFT JOIN Employees e
+ON ep.EmployeeID = e.EmployeeID;
+
 
 -- FULL JOIN
--- ===========
+-- ==========
+
 -- Show all employees and all departments.
+SELECT e.EmployeeName,
+       d.DepartmentName
+FROM Employees e
+FULL JOIN Departments d
+ON e.DepartmentID = d.DepartmentID;
+
+
 -- Show all departments and projects.
+SELECT d.DepartmentName,
+       p.ProjectName
+FROM Departments d
+FULL JOIN Projects p
+ON d.DepartmentID = p.DepartmentID;
+
+
 -- Display all employees and projects.
+SELECT e.EmployeeName,
+       p.ProjectName
+FROM Employees e
+FULL JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+FULL JOIN Projects p
+ON ep.ProjectID = p.ProjectID;
+
+
 -- Show every department whether employees exist or not.
+SELECT d.DepartmentName,
+       e.EmployeeName
+FROM Departments d
+FULL JOIN Employees e
+ON d.DepartmentID = e.DepartmentID;
+
+
 -- Show all departments and projects including unmatched records.
+SELECT d.DepartmentName,
+       p.ProjectName
+FROM Departments d
+FULL JOIN Projects p
+ON d.DepartmentID = p.DepartmentID;
 
 -- INTERMEDIATE ASSIGNMENTS
 -- =========================
+
 -- INNER JOIN
 -- ==========
+
 -- Show employees whose department is IT.
+SELECT e.EmployeeID,
+       e.EmployeeName,
+       d.DepartmentName
+FROM Employees e
+INNER JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE d.DepartmentName = 'IT';
+
+
 -- Display employees working on projects with budget above 200000.
+SELECT e.EmployeeID,
+       e.EmployeeName,
+       p.ProjectName,
+       p.Budget
+FROM Employees e
+INNER JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+INNER JOIN Projects p
+ON ep.ProjectID = p.ProjectID
+WHERE p.Budget > 200000;
+
+
 -- Show employee names, department names and project names.
+SELECT e.EmployeeName,
+       d.DepartmentName,
+       p.ProjectName
+FROM Employees e
+INNER JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+INNER JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+INNER JOIN Projects p
+ON ep.ProjectID = p.ProjectID;
+
+
 -- Display total employees in each department.
+SELECT d.DepartmentName,
+       COUNT(e.EmployeeID) AS TotalEmployees
+FROM Departments d
+INNER JOIN Employees e
+ON d.DepartmentID = e.DepartmentID
+GROUP BY d.DepartmentName;
+
+
 -- Show average salary department-wise.
+SELECT d.DepartmentName,
+       AVG(e.Salary) AS AverageSalary
+FROM Departments d
+INNER JOIN Employees e
+ON d.DepartmentID = e.DepartmentID
+GROUP BY d.DepartmentName;
+
 
 -- LEFT JOIN
 -- ============
+
 -- Find employees without departments.
+SELECT e.*
+FROM Employees e
+LEFT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE d.DepartmentID IS NULL;
+
+
 -- Find employees without projects.
+SELECT e.*
+FROM Employees e
+LEFT JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+WHERE ep.ProjectID IS NULL;
+
+
 -- Find departments without employees.
+SELECT d.*
+FROM Departments d
+LEFT JOIN Employees e
+ON d.DepartmentID = e.DepartmentID
+WHERE e.EmployeeID IS NULL;
+
+
 -- Find projects without departments.
+SELECT p.*
+FROM Projects p
+LEFT JOIN Departments d
+ON p.DepartmentID = d.DepartmentID
+WHERE d.DepartmentID IS NULL;
+
+
 -- Show departments with total employees including zero employees.
+SELECT d.DepartmentName,
+       COUNT(e.EmployeeID) AS TotalEmployees
+FROM Departments d
+LEFT JOIN Employees e
+ON d.DepartmentID = e.DepartmentID
+GROUP BY d.DepartmentName;
+
 
 -- RIGHT JOIN
--- ===========
+-- ============
+
 -- Find departments having no employees.
+SELECT d.*
+FROM Employees e
+RIGHT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE e.EmployeeID IS NULL;
+
+
 -- Find projects without employees.
+SELECT p.*
+FROM EmployeeProjects ep
+RIGHT JOIN Projects p
+ON ep.ProjectID = p.ProjectID
+WHERE ep.EmployeeID IS NULL;
+
+
 -- Show departments even if no projects exist.
+SELECT d.DepartmentName,
+       p.ProjectName
+FROM Projects p
+RIGHT JOIN Departments d
+ON p.DepartmentID = d.DepartmentID;
+
+
 -- Count employees in every department.
+SELECT d.DepartmentName,
+       COUNT(e.EmployeeID) AS EmployeeCount
+FROM Employees e
+RIGHT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+GROUP BY d.DepartmentName;
+
+
 -- List every project whether employees are assigned or not.
+SELECT p.ProjectName,
+       e.EmployeeName
+FROM EmployeeProjects ep
+RIGHT JOIN Projects p
+ON ep.ProjectID = p.ProjectID
+LEFT JOIN Employees e
+ON ep.EmployeeID = e.EmployeeID;
+
 
 -- FULL JOIN
 -- ===========
+
 -- Display all departments and employees.
+SELECT d.DepartmentName,
+       e.EmployeeName
+FROM Departments d
+FULL JOIN Employees e
+ON d.DepartmentID = e.DepartmentID;
+
+
 -- Show unmatched employees.
+SELECT e.*
+FROM Employees e
+FULL JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE d.DepartmentID IS NULL;
+
+
 -- Show unmatched departments.
+SELECT d.*
+FROM Employees e
+FULL JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE e.EmployeeID IS NULL;
+
+
 -- Show all employees and departments with NULL handling.
+SELECT
+    ISNULL(e.EmployeeName,'No Employee') AS EmployeeName,
+    ISNULL(d.DepartmentName,'No Department') AS DepartmentName
+FROM Employees e
+FULL JOIN Departments d
+ON e.DepartmentID = d.DepartmentID;
+
+
 -- Display departments and projects including unmatched rows.
+SELECT d.DepartmentName,
+       p.ProjectName
+FROM Departments d
+FULL JOIN Projects p
+ON d.DepartmentID = p.DepartmentID;
+
+
+
+
 -- ADVANCED ASSIGNMENTS
+-- =======================
 
 -- INNER JOIN
 -- ============
+
 -- Find highest-paid employee in every department.
+SELECT d.DepartmentName,
+       e.EmployeeName,
+       e.Salary
+FROM Employees e
+INNER JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE e.Salary = (
+    SELECT MAX(e2.Salary)
+    FROM Employees e2
+    WHERE e2.DepartmentID = e.DepartmentID
+);
+
+
 -- Find department having highest average salary.
+SELECT TOP 1
+       d.DepartmentName,
+       AVG(e.Salary) AS AverageSalary
+FROM Departments d
+INNER JOIN Employees e
+ON d.DepartmentID = e.DepartmentID
+GROUP BY d.DepartmentName
+ORDER BY AverageSalary DESC;
+
+
 -- Find employee working on highest-budget project.
+SELECT e.EmployeeName,
+       p.ProjectName,
+       p.Budget
+FROM Employees e
+INNER JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+INNER JOIN Projects p
+ON ep.ProjectID = p.ProjectID
+WHERE p.Budget = (
+    SELECT MAX(Budget)
+    FROM Projects
+);
+
+
 -- Show managers and their employees.
+SELECT
+    m.EmployeeName AS ManagerName,
+    e.EmployeeName AS EmployeeName
+FROM Employees e
+INNER JOIN Employees m
+ON e.ManagerID = m.EmployeeID;
+
+
 -- Find employees working on more than one project.
+SELECT
+    e.EmployeeID,
+    e.EmployeeName,
+    COUNT(ep.ProjectID) AS TotalProjects
+FROM Employees e
+INNER JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+GROUP BY e.EmployeeID,
+         e.EmployeeName
+HAVING COUNT(ep.ProjectID) > 1;
+
 
 -- LEFT JOIN
 -- ============
+
 -- Find employees not assigned to any project.
+SELECT e.*
+FROM Employees e
+LEFT JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+WHERE ep.ProjectID IS NULL;
+
+
 -- Find departments having no projects.
+SELECT d.*
+FROM Departments d
+LEFT JOIN Projects p
+ON d.DepartmentID = p.DepartmentID
+WHERE p.ProjectID IS NULL;
+
+
 -- Find departments having employees but no projects.
+SELECT d.DepartmentID,
+       d.DepartmentName
+FROM Departments d
+LEFT JOIN Projects p
+ON d.DepartmentID = p.DepartmentID
+INNER JOIN Employees e
+ON d.DepartmentID = e.DepartmentID
+WHERE p.ProjectID IS NULL
+GROUP BY d.DepartmentID,
+         d.DepartmentName;
+
+
 -- Show employees with project count.
+SELECT
+    e.EmployeeID,
+    e.EmployeeName,
+    COUNT(ep.ProjectID) AS ProjectCount
+FROM Employees e
+LEFT JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+GROUP BY
+    e.EmployeeID,
+    e.EmployeeName;
+
+
 -- Show project count department-wise including zero.
+SELECT
+    d.DepartmentName,
+    COUNT(p.ProjectID) AS ProjectCount
+FROM Departments d
+LEFT JOIN Projects p
+ON d.DepartmentID = p.DepartmentID
+GROUP BY d.DepartmentName;
+
 
 -- RIGHT JOIN
 -- ============
+
 -- Find projects without employees.
+SELECT p.*
+FROM EmployeeProjects ep
+RIGHT JOIN Projects p
+ON ep.ProjectID = p.ProjectID
+WHERE ep.EmployeeID IS NULL;
+
+
 -- Find departments without projects.
+SELECT d.*
+FROM Projects p
+RIGHT JOIN Departments d
+ON p.DepartmentID = d.DepartmentID
+WHERE p.ProjectID IS NULL;
+
+
 -- Find projects whose department doesn't exist.
+SELECT p.*
+FROM Departments d
+RIGHT JOIN Projects p
+ON d.DepartmentID = p.DepartmentID
+WHERE d.DepartmentID IS NULL;
+
+
 -- Find orphan employee records.
+SELECT e.*
+FROM Departments d
+RIGHT JOIN Employees e
+ON d.DepartmentID = e.DepartmentID
+WHERE d.DepartmentID IS NULL;
+
+
 -- Display every department and employee count.
+SELECT
+    d.DepartmentName,
+    COUNT(e.EmployeeID) AS EmployeeCount
+FROM Employees e
+RIGHT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+GROUP BY d.DepartmentName;
 
 -- LEFT ANTI JOIN
 -- ================
@@ -212,10 +653,43 @@ WHERE d.DepartmentID IS NULL;
 -- Assignments:
 
 -- Find employees without departments.
+SELECT e.*
+FROM Employees e
+LEFT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE d.DepartmentID IS NULL;
+
+
 -- Find departments without employees.
+SELECT d.*
+FROM Departments d
+LEFT JOIN Employees e
+ON d.DepartmentID = e.DepartmentID
+WHERE e.EmployeeID IS NULL;
+
+
 -- Find employees without projects.
+SELECT e.*
+FROM Employees e
+LEFT JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+WHERE ep.ProjectID IS NULL;
+
+
 -- Find departments without projects.
+SELECT d.*
+FROM Departments d
+LEFT JOIN Projects p
+ON d.DepartmentID = p.DepartmentID
+WHERE p.ProjectID IS NULL;
+
+
 -- Find projects without departments.
+SELECT p.*
+FROM Projects p
+LEFT JOIN Departments d
+ON p.DepartmentID = d.DepartmentID
+WHERE d.DepartmentID IS NULL;
 
 -- RIGHT ANTI JOIN
 
@@ -230,10 +704,43 @@ WHERE e.EmployeeID IS NULL;
 -- Assignments:
 
 -- Departments without employees.
+SELECT d.*
+FROM Employees e
+RIGHT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE e.EmployeeID IS NULL;
+
+
 -- Projects without employees.
+SELECT p.*
+FROM EmployeeProjects ep
+RIGHT JOIN Projects p
+ON ep.ProjectID = p.ProjectID
+WHERE ep.EmployeeID IS NULL;
+
+
 -- Departments without projects.
+SELECT d.*
+FROM Projects p
+RIGHT JOIN Departments d
+ON p.DepartmentID = d.DepartmentID
+WHERE p.ProjectID IS NULL;
+
+
 -- Employees whose departments don't exist.
+SELECT e.*
+FROM Departments d
+RIGHT JOIN Employees e
+ON d.DepartmentID = e.DepartmentID
+WHERE d.DepartmentID IS NULL;
+
+
 -- Projects whose departments don't exist.
+SELECT p.*
+FROM Departments d
+RIGHT JOIN Projects p
+ON d.DepartmentID = p.DepartmentID
+WHERE d.DepartmentID IS NULL;
 
 
 -- FULL ANTI JOIN
@@ -250,22 +757,170 @@ WHERE e.DepartmentID IS NULL
 -- Assignments:
 
 -- Find all unmatched employees and departments.
+SELECT
+    e.EmployeeName,
+    d.DepartmentName
+FROM Employees e
+FULL JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE e.DepartmentID IS NULL
+   OR d.DepartmentID IS NULL;
+
+
 -- Find all unmatched departments and employees.
+SELECT
+    d.DepartmentName,
+    e.EmployeeName
+FROM Departments d
+FULL JOIN Employees e
+ON d.DepartmentID = e.DepartmentID
+WHERE e.DepartmentID IS NULL
+   OR d.DepartmentID IS NULL;
+
+
 -- Find projects without departments and departments without projects.
+SELECT
+    d.DepartmentName,
+    p.ProjectName
+FROM Departments d
+FULL JOIN Projects p
+ON d.DepartmentID = p.DepartmentID
+WHERE d.DepartmentID IS NULL
+   OR p.DepartmentID IS NULL;
+
+
 -- Find employees without projects and projects without employees.
+SELECT
+    e.EmployeeName,
+    p.ProjectName
+FROM Employees e
+FULL JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+FULL JOIN Projects p
+ON ep.ProjectID = p.ProjectID
+WHERE ep.EmployeeID IS NULL
+   OR ep.ProjectID IS NULL;
+
+
 -- Show all orphan records across Employees and Departments.
+SELECT
+    e.EmployeeID,
+    e.EmployeeName,
+    d.DepartmentID,
+    d.DepartmentName
+FROM Employees e
+FULL JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE e.DepartmentID IS NULL
+   OR d.DepartmentID IS NULL;
 
 -- EXPERT LEVEL CHALLENGES
 -- ===========================
 -- Find the department with the highest project budget.
+SELECT TOP 1
+       d.DepartmentName,
+       MAX(p.Budget) AS HighestBudget
+FROM Departments d
+INNER JOIN Projects p
+ON d.DepartmentID = p.DepartmentID
+GROUP BY d.DepartmentName
+ORDER BY HighestBudget DESC;
+
 -- Find employees working in departments without projects.
+SELECT e.EmployeeID,
+       e.EmployeeName
+FROM Employees e
+LEFT JOIN Projects p
+ON e.DepartmentID = p.DepartmentID
+WHERE p.ProjectID IS NULL;
+
+
 -- Find projects having multiple employees.
+SELECT
+    p.ProjectName,
+    COUNT(ep.EmployeeID) AS EmployeeCount
+FROM Projects p
+INNER JOIN EmployeeProjects ep
+ON p.ProjectID = ep.ProjectID
+GROUP BY
+    p.ProjectName
+HAVING COUNT(ep.EmployeeID) > 1;
+
+
 -- Find employees assigned to projects outside their own department.
+SELECT
+    e.EmployeeName,
+    d.DepartmentName AS EmployeeDepartment,
+    p.ProjectName
+FROM Employees e
+INNER JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+INNER JOIN Projects p
+ON ep.ProjectID = p.ProjectID
+INNER JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE e.DepartmentID <> p.DepartmentID;
+
+
 -- Find departments where every employee is assigned to a project.
+SELECT d.DepartmentName
+FROM Departments d
+WHERE NOT EXISTS
+(
+    SELECT *
+    FROM Employees e
+    LEFT JOIN EmployeeProjects ep
+    ON e.EmployeeID = ep.EmployeeID
+    WHERE e.DepartmentID = d.DepartmentID
+      AND ep.ProjectID IS NULL
+);
+
+
 -- Find employees who share the same manager.
+SELECT
+    e1.EmployeeName,
+    e2.EmployeeName,
+    e1.ManagerID
+FROM Employees e1
+INNER JOIN Employees e2
+ON e1.ManagerID = e2.ManagerID
+AND e1.EmployeeID < e2.EmployeeID
+WHERE e1.ManagerID IS NOT NULL;
+
 -- Find departments with no managers.
+SELECT DISTINCT
+       d.DepartmentName
+FROM Departments d
+LEFT JOIN Employees e
+ON d.DepartmentID = e.DepartmentID
+AND e.ManagerID IS NULL
+WHERE e.EmployeeID IS NULL;
+
+
 -- Find managers with more than three employees.
+SELECT
+    m.EmployeeName AS ManagerName,
+    COUNT(e.EmployeeID) AS EmployeeCount
+FROM Employees e
+INNER JOIN Employees m
+ON e.ManagerID = m.EmployeeID
+GROUP BY
+    m.EmployeeName
+HAVING COUNT(e.EmployeeID) > 3;
+
+
 -- Find employees hired before their manager.
+SELECT
+    e.EmployeeName,
+    m.EmployeeName AS ManagerName,
+    e.JoiningDate,
+    m.JoiningDate
+FROM Employees e
+INNER JOIN Employees m
+ON e.ManagerID = m.EmployeeID
+WHERE e.JoiningDate < m.JoiningDate;
+
+
 -- Create one report showing:
 -- Employee Name
 -- Department
@@ -274,18 +929,23 @@ WHERE e.DepartmentID IS NULL
 -- Manager Name
 -- Salary
 -- Department Location
-
-
-
-
-
-
-
-
-
-
-
-
+SELECT
+    e.EmployeeName,
+    d.DepartmentName,
+    p.ProjectName,
+    p.Budget,
+    m.EmployeeName AS ManagerName,
+    e.Salary,
+    d.Location
+FROM Employees e
+LEFT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+LEFT JOIN Employees m
+ON e.ManagerID = m.EmployeeID
+LEFT JOIN EmployeeProjects ep
+ON e.EmployeeID = ep.EmployeeID
+LEFT JOIN Projects p
+ON ep.ProjectID = p.ProjectID;
 
 -- Set operators
 -- ==============
@@ -416,102 +1076,720 @@ INSERT INTO StoreOrders VALUES
 
 -- BASIC ASSIGNMENTS
 -- ==================
+
 -- UNION
 -- ========
+
 -- Display all employee names from current and former employees without duplicates.
+SELECT EmployeeName
+FROM CurrentEmployees
+
+UNION
+
+SELECT EmployeeName
+FROM FormerEmployees;
+
+
 -- Display all departments from both employee tables.
+SELECT Department
+FROM CurrentEmployees
+
+UNION
+
+SELECT Department
+FROM FormerEmployees;
+
+
 -- Display all customer names from domestic and international customers.
+SELECT CustomerName
+FROM DomesticCustomers
+
+UNION
+
+SELECT CustomerName
+FROM InternationalCustomers;
+
+
 -- Display all customer cities without duplicates.
+SELECT City
+FROM DomesticCustomers
+
+UNION
+
+SELECT City
+FROM InternationalCustomers;
+
+
 -- Display all order amounts from both order tables without duplicates.
+SELECT Amount
+FROM OnlineOrders
+
+UNION
+
+SELECT Amount
+FROM StoreOrders;
+
 
 -- UNION ALL
 -- ============
+
 -- Display all employee names including duplicates.
+SELECT EmployeeName
+FROM CurrentEmployees
+
+UNION ALL
+
+SELECT EmployeeName
+FROM FormerEmployees;
+
+
 -- Display all departments including duplicate values.
+SELECT Department
+FROM CurrentEmployees
+
+UNION ALL
+
+SELECT Department
+FROM FormerEmployees;
+
+
 -- Display all customer names including duplicates.
+SELECT CustomerName
+FROM DomesticCustomers
+
+UNION ALL
+
+SELECT CustomerName
+FROM InternationalCustomers;
+
+
 -- Display all customer cities including duplicates.
+SELECT City
+FROM DomesticCustomers
+
+UNION ALL
+
+SELECT City
+FROM InternationalCustomers;
+
+
 -- Display all order amounts including duplicate values.
+SELECT Amount
+FROM OnlineOrders
+
+UNION ALL
+
+SELECT Amount
+FROM StoreOrders;
+
 
 -- EXCEPT
 -- =======
+
 -- Find current employees who are not former employees.
+SELECT EmployeeID,
+       EmployeeName,
+       Department,
+       Salary
+FROM CurrentEmployees
+
+EXCEPT
+
+SELECT EmployeeID,
+       EmployeeName,
+       Department,
+       Salary
+FROM FormerEmployees;
+
+
 -- Find former employees who are not current employees.
+SELECT EmployeeID,
+       EmployeeName,
+       Department,
+       Salary
+FROM FormerEmployees
+
+EXCEPT
+
+SELECT EmployeeID,
+       EmployeeName,
+       Department,
+       Salary
+FROM CurrentEmployees;
+
+
 -- Find domestic customers not present internationally.
+SELECT CustomerID,
+       CustomerName,
+       City
+FROM DomesticCustomers
+
+EXCEPT
+
+SELECT CustomerID,
+       CustomerName,
+       City
+FROM InternationalCustomers;
+
+
 -- Find online orders not present in store orders.
+SELECT OrderID,
+       CustomerID,
+       Amount
+FROM OnlineOrders
+
+EXCEPT
+
+SELECT OrderID,
+       CustomerID,
+       Amount
+FROM StoreOrders;
+
+
 -- Find departments that exist only in current employees.
+SELECT Department
+FROM CurrentEmployees
+
+EXCEPT
+
+SELECT Department
+FROM FormerEmployees;
+
 
 -- INTERSECT
 -- ============
+
 -- Find employees present in both tables.
+SELECT EmployeeID,
+       EmployeeName,
+       Department,
+       Salary
+FROM CurrentEmployees
+
+INTERSECT
+
+SELECT EmployeeID,
+       EmployeeName,
+       Department,
+       Salary
+FROM FormerEmployees;
+
+
 -- Find common departments.
+SELECT Department
+FROM CurrentEmployees
+
+INTERSECT
+
+SELECT Department
+FROM FormerEmployees;
+
+
 -- Find customers present in both customer tables.
+SELECT CustomerID,
+       CustomerName,
+       City
+FROM DomesticCustomers
+
+INTERSECT
+
+SELECT CustomerID,
+       CustomerName,
+       City
+FROM InternationalCustomers;
+
+
 -- Find common cities.
+SELECT City
+FROM DomesticCustomers
+
+INTERSECT
+
+SELECT City
+FROM InternationalCustomers;
+
+
 -- Find common orders.
+SELECT OrderID,
+       CustomerID,
+       Amount
+FROM OnlineOrders
+
+INTERSECT
+
+SELECT OrderID,
+       CustomerID,
+       Amount
+FROM StoreOrders;
 
 -- INTERMEDIATE ASSIGNMENTS
 -- ==========================
+
 -- UNION
 -- =======
+
 -- Display all employee IDs and names.
+SELECT EmployeeID,
+       EmployeeName
+FROM CurrentEmployees
+
+UNION
+
+SELECT EmployeeID,
+       EmployeeName
+FROM FormerEmployees;
+
+
 -- Display all customer IDs and names.
+SELECT CustomerID,
+       CustomerName
+FROM DomesticCustomers
+
+UNION
+
+SELECT CustomerID,
+       CustomerName
+FROM InternationalCustomers;
+
+
 -- Display all salaries without duplicates.
+SELECT Salary
+FROM CurrentEmployees
+
+UNION
+
+SELECT Salary
+FROM FormerEmployees;
+
+
 -- Display all order IDs.
+SELECT OrderID
+FROM OnlineOrders
+
+UNION
+
+SELECT OrderID
+FROM StoreOrders;
+
+
 -- Combine employee and former employee department lists.
+SELECT Department
+FROM CurrentEmployees
+
+UNION
+
+SELECT Department
+FROM FormerEmployees;
+
 
 -- UNION ALL
 -- ==========
+
 -- Count total rows returned using UNION ALL.
+SELECT COUNT(*) AS TotalRows
+FROM
+(
+    SELECT EmployeeID
+    FROM CurrentEmployees
+
+    UNION ALL
+
+    SELECT EmployeeID
+    FROM FormerEmployees
+) AS Employees;
+
+
 -- Display all customer records including duplicates.
+SELECT *
+FROM DomesticCustomers
+
+UNION ALL
+
+SELECT *
+FROM InternationalCustomers;
+
+
 -- Display all salaries including duplicates.
+SELECT Salary
+FROM CurrentEmployees
+
+UNION ALL
+
+SELECT Salary
+FROM FormerEmployees;
+
+
 -- Display all customer cities.
+SELECT City
+FROM DomesticCustomers
+
+UNION ALL
+
+SELECT City
+FROM InternationalCustomers;
+
+
 -- Display all order amounts.
+SELECT Amount
+FROM OnlineOrders
+
+UNION ALL
+
+SELECT Amount
+FROM StoreOrders;
+
 
 -- EXCEPT
 -- =======
+
 -- Find employee IDs existing only in CurrentEmployees.
+SELECT EmployeeID
+FROM CurrentEmployees
+
+EXCEPT
+
+SELECT EmployeeID
+FROM FormerEmployees;
+
+
 -- Find employee IDs existing only in FormerEmployees.
+SELECT EmployeeID
+FROM FormerEmployees
+
+EXCEPT
+
+SELECT EmployeeID
+FROM CurrentEmployees;
+
+
 -- Find customer IDs existing only in DomesticCustomers.
+SELECT CustomerID
+FROM DomesticCustomers
+
+EXCEPT
+
+SELECT CustomerID
+FROM InternationalCustomers;
+
+
 -- Find customer IDs existing only in InternationalCustomers.
+SELECT CustomerID
+FROM InternationalCustomers
+
+EXCEPT
+
+SELECT CustomerID
+FROM DomesticCustomers;
+
+
 -- Find online order IDs not found in StoreOrders.
+SELECT OrderID
+FROM OnlineOrders
+
+EXCEPT
+
+SELECT OrderID
+FROM StoreOrders;
+
 
 -- INTERSECT
 -- ===========
+
 -- Find employee IDs common to both tables.
+SELECT EmployeeID
+FROM CurrentEmployees
+
+INTERSECT
+
+SELECT EmployeeID
+FROM FormerEmployees;
+
+
 -- Find common customer IDs.
+SELECT CustomerID
+FROM DomesticCustomers
+
+INTERSECT
+
+SELECT CustomerID
+FROM InternationalCustomers;
+
+
 -- Find common order IDs.
+SELECT OrderID
+FROM OnlineOrders
+
+INTERSECT
+
+SELECT OrderID
+FROM StoreOrders;
+
+
 -- Find common salaries.
+SELECT Salary
+FROM CurrentEmployees
+
+INTERSECT
+
+SELECT Salary
+FROM FormerEmployees;
+
+
 -- Find common departments.
+SELECT Department
+FROM CurrentEmployees
+
+INTERSECT
+
+SELECT Department
+FROM FormerEmployees;
+
 
 -- ADVANCED ASSIGNMENTS
 -- =======================
+
 -- UNION
 -- =======
+
 -- Combine employee names with customer names into one list.
+SELECT EmployeeName AS Name
+FROM CurrentEmployees
+
+UNION
+
+SELECT CustomerName
+FROM DomesticCustomers;
+
+
 -- Create a unique list of all people and organizations.
+SELECT EmployeeName AS Name
+FROM CurrentEmployees
+
+UNION
+
+SELECT EmployeeName
+FROM FormerEmployees
+
+UNION
+
+SELECT CustomerName
+FROM DomesticCustomers
+
+UNION
+
+SELECT CustomerName
+FROM InternationalCustomers;
+
+
 -- Display all departments from both tables in alphabetical order.
+SELECT Department
+FROM CurrentEmployees
+
+UNION
+
+SELECT Department
+FROM FormerEmployees
+ORDER BY Department;
+
+
 -- Combine customer cities and employee departments into one result set.
+SELECT City AS Location
+FROM DomesticCustomers
+
+UNION
+
+SELECT Department
+FROM CurrentEmployees;
+
+
 -- Display all IDs from employees and customers.
+SELECT EmployeeID AS ID
+FROM CurrentEmployees
+
+UNION
+
+SELECT EmployeeID
+FROM FormerEmployees
+
+UNION
+
+SELECT CustomerID
+FROM DomesticCustomers
+
+UNION
+
+SELECT CustomerID
+FROM InternationalCustomers;
+
 
 -- UNION ALL
 -- ===========
+
 -- Combine all employee and former employee records with duplicates.
+SELECT *
+FROM CurrentEmployees
+
+UNION ALL
+
+SELECT *
+FROM FormerEmployees;
+
+
 -- Display all order records.
+SELECT *
+FROM OnlineOrders
+
+UNION ALL
+
+SELECT *
+FROM StoreOrders;
+
+
 -- Display all customer records.
+SELECT *
+FROM DomesticCustomers
+
+UNION ALL
+
+SELECT *
+FROM InternationalCustomers;
+
+
 -- Display employee names with a new column indicating the source table (Current/Former).
+SELECT EmployeeName,
+       'Current' AS Source
+FROM CurrentEmployees
+
+UNION ALL
+
+SELECT EmployeeName,
+       'Former' AS Source
+FROM FormerEmployees;
+
+
 -- Combine online and store orders with a source column.
+SELECT OrderID,
+       CustomerID,
+       Amount,
+       'Online' AS Source
+FROM OnlineOrders
+
+UNION ALL
+
+SELECT OrderID,
+       CustomerID,
+       Amount,
+       'Store' AS Source
+FROM StoreOrders;
+
 
 -- EXCEPT
 -- ======
+
 -- Find customers who ordered online but never ordered in-store.
+SELECT CustomerID
+FROM OnlineOrders
+
+EXCEPT
+
+SELECT CustomerID
+FROM StoreOrders;
+
+
 -- Find customers who ordered in-store but never ordered online.
+SELECT CustomerID
+FROM StoreOrders
+
+EXCEPT
+
+SELECT CustomerID
+FROM OnlineOrders;
+
+
 -- Find employee names existing only in current employees.
+SELECT EmployeeName
+FROM CurrentEmployees
+
+EXCEPT
+
+SELECT EmployeeName
+FROM FormerEmployees;
+
+
 -- Find departments unique to former employees.
+SELECT Department
+FROM FormerEmployees
+
+EXCEPT
+
+SELECT Department
+FROM CurrentEmployees;
+
+
 -- Find customer cities unique to domestic customers.
+SELECT City
+FROM DomesticCustomers
+
+EXCEPT
+
+SELECT City
+FROM InternationalCustomers;
+
 
 -- INTERSECT
 -- ============
+
 -- Find customers who ordered both online and in-store.
+SELECT CustomerID
+FROM OnlineOrders
+
+INTERSECT
+
+SELECT CustomerID
+FROM StoreOrders;
+
+
 -- Find employees existing in both tables.
+SELECT EmployeeID,
+       EmployeeName,
+       Department,
+       Salary
+FROM CurrentEmployees
+
+INTERSECT
+
+SELECT EmployeeID,
+       EmployeeName,
+       Department,
+       Salary
+FROM FormerEmployees;
+
+
 -- Find departments appearing in both employee tables.
+SELECT Department
+FROM CurrentEmployees
+
+INTERSECT
+
+SELECT Department
+FROM FormerEmployees;
+
+
 -- Find customer names appearing in both customer tables.
+SELECT CustomerName
+FROM DomesticCustomers
+
+INTERSECT
+
+SELECT CustomerName
+FROM InternationalCustomers;
+
+
 -- Find common salaries between current and former employees.
+SELECT Salary
+FROM CurrentEmployees
+
+INTERSECT
+
+SELECT Salary
+FROM FormerEmployees;
